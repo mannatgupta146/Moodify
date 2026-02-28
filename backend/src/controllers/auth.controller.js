@@ -121,12 +121,11 @@ const getMe = async(req, res) => {
 }
 
 const logoutUser = async(req, res) => {
-    const token = req.cookie.token
+    const token = req.cookies.token
 
     res.clearCookie('token')
 
     await blacklistModel.create({
-        message: "Token blacklisted",
         token
     })
 
