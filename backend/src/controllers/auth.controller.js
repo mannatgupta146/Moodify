@@ -126,9 +126,7 @@ const logoutUser = async(req, res) => {
 
     res.clearCookie('token')
 
-    await blacklistModel.create({
-        token
-    })
+    redis.set(token, Date.now().toString(), 'EX', 60*60*24)
 
     res.status(200).json({
         message: "Logout successful"
