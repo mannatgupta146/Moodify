@@ -10,14 +10,12 @@ const Login = () => {
 
   const { loading, handleLogin } = useAuth()
 
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
+  const [identifier, setIdentifier] = useState("")
   const [password, setPassword] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await handleLogin({ email, password })
-
+    await handleLogin({ identifier, password })
     navigate("/")
   }
 
@@ -27,11 +25,11 @@ const Login = () => {
         <h1>Login User</h1>
         <form onSubmit={handleSubmit}>
           <FormGroup
-            type="email"
-            label="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            label="identifier"
+            placeholder="Enter email or username"
+            value={identifier}
+            onChange={(e) => setIdentifier(e.target.value)}
           />
 
           <FormGroup
