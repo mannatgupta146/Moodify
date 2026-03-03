@@ -1,18 +1,60 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/auth.scss'
 import FormGroup from '../components/FormGroup'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../hooks/useAuth'
 
 const Register = () => {
+  const navigate = useNavigate()
+  const { handleRegister, loading } = useAuth()
+
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    const success = await handleRegister({ username, email, password })
+
+    if (success) {
+      navigate('/')
+    }
+  }
+
   return (
     <main className="auth-page">
       <div className="auth-container">
-        <h1>Login User</h1>
-        <form>
-          <FormGroup label="username" placeholder="Enter your username" />
-          <FormGroup label="email" placeholder="Enter your email" />
-          <FormGroup label="password" placeholder="Enter your password" />
-          <button type="submit" className='auth-btn'>Login</button>
+        <h1>Register User</h1>
+
+        <form onSubmit={handleSubmit}>
+          <FormGroup
+            type="text"
+            label="username"
+            placeholder="Enter your username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+
+          <FormGroup
+            type="email"
+            label="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <FormGroup
+            type="password"
+            label="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button type="submit" className="auth-btn" disabled={loading}>
+            {loading ? "Creating..." : "Register"}
+          </button>
         </form>
 
         <p className="auth-redirect">
