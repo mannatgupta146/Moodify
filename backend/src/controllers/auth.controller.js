@@ -1,7 +1,6 @@
 const userModel = require("../models/user.model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const blacklistModel = require("../models/blacklist.model")
 const redis = require("../config/cache")
 
 const registerUser = async (req, res) => {
@@ -55,7 +54,7 @@ const loginUser = async (req, res) => {
 
   const user = await userModel
     .findOne({
-      $or: [{ email: identifier }, { username: identifier }],
+      $or: [{ email }, { username }],
     })
     .select("+password")
 
@@ -79,13 +78,13 @@ const loginUser = async (req, res) => {
       username: user.username,
     },
     process.env.JWT_SECRET,
-    { expiresIn: "3d" },
+    { expiresIn: "3d" }
   )
 
   res.cookie("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days in milliseconds
+    maxAge: 3 * 24 * 60 * 60 * 1000,
   })
 
   res.status(200).json({

@@ -7,7 +7,6 @@ import { useState } from "react"
 
 const Login = () => {
   const navigate = useNavigate()
-
   const { loading, handleLogin } = useAuth()
 
   const [identifier, setIdentifier] = useState("")
@@ -15,7 +14,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await handleLogin({ identifier, password })
+
+    await handleLogin({
+      username: identifier,
+      email: identifier,
+      password,
+    })
+
     navigate("/")
   }
 
@@ -23,10 +28,11 @@ const Login = () => {
     <main className="auth-page">
       <div className="auth-container">
         <h1>Login User</h1>
+
         <form onSubmit={handleSubmit}>
           <FormGroup
             type="text"
-            label="identifier"
+            label="Username | Email"
             placeholder="Enter email or username"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
@@ -39,8 +45,9 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+
           <button type="submit" className="auth-btn">
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
