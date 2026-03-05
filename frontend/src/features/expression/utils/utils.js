@@ -70,7 +70,7 @@ export const detectEmotion = ({ videoRef, landmarkerRef, setEmotion }) => {
   let mood = "Neutral 😐"
 
   // 😲 SURPRISED → open mouth + any eyebrow raise
-  if (mouthOpen > 0 && oneBrowUp > 0.18) {
+  if (mouthOpen > 0.2 && oneBrowUp > 0.18) {
     mood = "Surprised 😲"
   }
 
@@ -90,9 +90,10 @@ export const detectEmotion = ({ videoRef, landmarkerRef, setEmotion }) => {
   }
 
   // 😔 SAD → inner brows raised + no smile
-  else if (get("browInnerUp") > 0.3 && smile < 0.2 && mouthOpen < 0.25) {
+  else if (get("browInnerUp") > 0.2 && smile < 0.2 && mouthOpen < 0.25) {
     mood = "Sad 😔"
   }
 
   setEmotion(mood)
+  return mood
 }
