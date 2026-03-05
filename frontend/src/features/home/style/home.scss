@@ -1,0 +1,28 @@
+.home-page {
+  min-height: 100vh;
+  background: #0b0b0b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-container {
+  width: 420px;
+  padding: 30px;
+  border-radius: 14px;
+  background: #111;
+  border: 1px solid #222;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+}
+
+.home-container h1 {
+  color: white;
+  margin-bottom: 6px;
+}
+
+.home-subtitle {
+  color: #999;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
