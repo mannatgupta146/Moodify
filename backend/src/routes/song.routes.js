@@ -9,4 +9,9 @@ const router = Router()
  */
 router.post('/', upload.single('song'), songController.uploadSong)
 
+/**
+ * @GET /api/songs
+ */
+router.get('/', songController.getSong)
+
 module.exports = router
