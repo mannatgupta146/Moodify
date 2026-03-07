@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { useSong } from "../hooks/useSong"
 import "../style/playlist.scss"
 
-const MOODS = ["happy", "sad", "angry", "surprised", "neutral", "excited"]
+const MOODS = ["happy", "sad", "angry", "surprised", "neutral"]
 
 const Playlist = () => {
   const {

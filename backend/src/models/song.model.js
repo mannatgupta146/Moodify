@@ -1,28 +1,28 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose")
 
 const songSchema = mongoose.Schema({
-    url: {
-        type: String,
-        required: true
+  url: {
+    type: String,
+    required: true,
+  },
+  posterUrl: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
+    required: true,
+  },
+  mood: {
+    type: String,
+    index: true,
+    enum: {
+      values: ["neutral", "surprised", "happy", "angry", "sad"],
+      message: "Enum this is",
     },
-    posterUrl: {
-        type: String,
-        required: true
-    },
-    title: {
-        type: String,
-        required: true
-    },
-    mood: {
-        type: String,
-        index: true,
-        enum: {
-            values: ["neutral", "surprised", "excited", "happy", "angry", "sad"],
-            message: "Enum this is"
-        }
-    }
+  },
 })
 
-const songModel = mongoose.model('songs', songSchema)
+const songModel = mongoose.model("songs", songSchema)
 
 module.exports = songModel

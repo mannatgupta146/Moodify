@@ -22,7 +22,6 @@ export default function FaceExpression({ onClick = () => {} }) {
       toast.warn("Could not detect expression. Try again!")
       return
     }
-    toast.success(`Detected: ${expression}`)
     onClick(expression)
   }
 
