@@ -1,35 +1,49 @@
-import React, { useState } from "react"
+import React from "react"
 import FaceExpression from "../../expression/component/FaceExpression"
 import Player from "../components/Player"
+import Playlist from "../components/Playlist"
+import UploadSong from "../components/UploadSong"
 import { useSong } from "../hooks/useSong"
 import "../style/home.scss"
 
 const Home = () => {
-  const { handleGetSong } = useSong()
-  const [moodDetected, setMoodDetected] = useState(false)
 
-  const handleMood = async (expression) => {
-    await handleGetSong({ mood: expression })
-    setMoodDetected(true)
-  }
+  const { song, handleGetSong } = useSong()
 
   return (
-    <main className="home-page">
+    <div className="home">
 
-      <div className="home-container">
+      <div className="home__container">
 
-        <h1>Moodify</h1>
-        <p className="home-subtitle">
-          Detect your mood and play music instantly
-        </p>
+        <div className="home__left">
 
-        <FaceExpression onClick={handleMood} />
+          <h1>Moodify</h1>
+
+          <p className="subtitle">
+            Detect your mood and play music
+          </p>
+
+          <FaceExpression
+            onClick={(expression) =>
+              handleGetSong({ mood: expression })
+            }
+          />
+
+          {song && <Player />}
+
+        </div>
+
+        <div className="home__right">
+
+          <Playlist />
+
+          <UploadSong />
+
+        </div>
 
       </div>
 
-      {moodDetected && <Player />}
-
-    </main>
+    </div>
   )
 }
 

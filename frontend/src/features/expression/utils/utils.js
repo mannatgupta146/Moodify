@@ -95,5 +95,16 @@ export const detectEmotion = ({ videoRef, landmarkerRef, setEmotion }) => {
   }
 
   setEmotion(mood)
-  return mood
+
+const moodMap = {
+  "Neutral 😐": "neutral",
+  "Surprised 😲": "surprised",
+  "Excited 🤩": "excited",
+  "Happy 😊": "happy",
+  "Angry 😠": "angry",
+  "Sad 😔": "sad"
+}
+
+return moodMap[mood]
+
 }

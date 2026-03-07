@@ -1,0 +1,22 @@
+.playlist__header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+
+.playlist__arrow{
+  background:#1f1f1f;
+  border:none;
+  color:white;
+  font-size:18px;
+  width:36px;
+  height:36px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.playlist__arrow:hover{
+  background:#333;
+}

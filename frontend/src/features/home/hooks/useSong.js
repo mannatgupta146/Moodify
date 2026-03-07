@@ -1,19 +1,42 @@
-import { useContext } from "react";
-import { getSong } from "../service/song.api";
-import { SongContext } from '../context/song.context'
+import { useContext } from "react"
+import { SongContext } from "../context/song.context"
+import { getSong } from "../service/song.api"
 
 export const useSong = () => {
-    const context = useContext(SongContext)
 
-    const {song, setSong, loading, setLoading} = context
+  const {
+    song,
+    setSong,
+    songs,
+    setSongs,
+    mood,
+    setMood,
+    loading,
+    setLoading
+  } = useContext(SongContext)
 
-    const handleGetSong = async ({mood}) => {
-        setLoading(true)
-        const data = await getSong({mood})
+  const handleGetSong = async ({ mood }) => {
 
-        setSong(data.song)
-        setLoading(false)
+    setLoading(true)
+    setMood(mood)
+
+    const data = await getSong({ mood })
+
+    setSongs(data.songs)
+
+    if (data.songs.length > 0) {
+      setSong(data.songs[0])
     }
 
-    return ({loading, song, handleGetSong})
+    setLoading(false)
+  }
+
+  return {
+    song,
+    songs,
+    mood,
+    setSong,
+    setMood,
+    handleGetSong
+  }
 }

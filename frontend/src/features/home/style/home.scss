@@ -1,28 +1,65 @@
-.home-page {
-  min-height: 100vh;
-  background: #0b0b0b;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.home{
+  min-height:100vh;
+  background:#000;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.home-container {
-  width: 420px;
-  padding: 30px;
-  border-radius: 14px;
-  background: #111;
-  border: 1px solid #222;
-  text-align: center;
-  box-shadow: 0 0 40px rgba(0,0,0,0.6);
+.home__container{
+  width:1200px;
+  display:grid;
+  grid-template-columns:1fr 350px;
+  gap:30px;
 }
 
-.home-container h1 {
-  color: white;
-  margin-bottom: 6px;
+.home__left{
+  background:#111;
+  padding:30px;
+  border-radius:12px;
+  text-align:center;
 }
 
-.home-subtitle {
-  color: #999;
-  margin-bottom: 20px;
-  font-size: 0.9rem;
+.subtitle{
+  color:#aaa;
+  margin-bottom:20px;
+}
+
+.home__right{
+  background:#111;
+  border-radius:12px;
+  padding:20px;
+}
+
+.upload{
+  margin-top:25px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.upload input{
+  background:#1a1a1a;
+  border:1px solid #333;
+  padding:10px;
+  border-radius:6px;
+  color:white;
+}
+
+.upload select{
+  background:#1a1a1a;
+  border:1px solid #333;
+  padding:10px;
+  border-radius:6px;
+  color:white;
+}
+
+.upload button{
+  background:#22c55e;
+  border:none;
+  padding:10px;
+  border-radius:6px;
+  font-weight:600;
+  cursor:pointer;
 }
