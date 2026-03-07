@@ -2,6 +2,8 @@
 
 > _Music that understands your mood._
 
+🔗 **Live Demo:** [https://moodify-tau-one.vercel.app](https://moodify-tau-one.vercel.app)
+
 Moodify detects your facial expression in real-time using your webcam and plays music that matches how you feel — happy, sad, angry, surprised, or neutral.
 
 ---
@@ -168,7 +170,6 @@ Register/Login → Open Camera → Click "Detect Expression"
 ```
 
 ---
-
 
 ## 🤝 Contributing
 
