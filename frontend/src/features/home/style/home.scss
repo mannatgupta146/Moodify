@@ -1,19 +1,21 @@
 .home {
-  min-height: 100vh;
+  height: 100vh;
   background: #0b0b0b;
   color: white;
   display: flex;
   flex-direction: column;
-  padding: 20px 40px;
+  padding: 14px 30px;
+  overflow: hidden;
 }
 
 .home__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #1f1f1f;
+  flex-shrink: 0;
 }
 
 .home__brand h1 {
@@ -58,31 +60,35 @@
 .home__container {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 24px;
+  grid-template-columns: 1fr 340px;
+  gap: 16px;
   max-width: 1300px;
   width: 100%;
   margin: 0 auto;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .home__left {
   background: #111;
-  padding: 30px;
+  padding: 16px;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .home__right {
   background: #111;
   border-radius: 12px;
-  padding: 20px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
+  gap: 14px;
+  min-height: 0;
+  overflow: hidden;
 }
 
 /* Upload */

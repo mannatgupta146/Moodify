@@ -1,9 +1,9 @@
 import React, { useRef, useEffect, useState } from "react"
 import { detectEmotion, init } from "../utils/utils"
-import '../style/face.scss'
-import '../../../shared/styles/global.scss'
+import "../style/face.scss"
+import "../../../shared/styles/global.scss"
 
-export default function FaceExpression({onClick = () => {}}) {
+export default function FaceExpression({ onClick = () => {} }) {
   const videoRef = useRef(null)
   const landmarkerRef = useRef(null)
   const streamRef = useRef(null)
@@ -21,23 +21,20 @@ export default function FaceExpression({onClick = () => {}}) {
   }
 
   return (
-  <div className="face-expression">
+    <div className="face-expression">
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        playsInline
+        style={{ borderRadius: "10px" }}
+      />
 
-    <video
-      ref={videoRef}
-      autoPlay
-      muted
-      playsInline
-      width="360"
-      style={{ borderRadius: "10px" }}
-    />
+      <h2 style={{ marginTop: 15 }}>{emotion}</h2>
 
-    <h2 style={{ marginTop: 15 }}>{emotion}</h2>
-
-    <button className="detect-btn" onClick={handleClick}>
-      Detect Expression
-    </button>
-
-  </div>
-)
+      <button className="detect-btn" onClick={handleClick}>
+        Detect Expression
+      </button>
+    </div>
+  )
 }
