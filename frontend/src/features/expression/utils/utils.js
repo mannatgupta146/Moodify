@@ -69,32 +69,37 @@ export const detectEmotion = ({ videoRef, landmarkerRef, setEmotion }) => {
   )
 
   const browDown = get("browDownLeft") + get("browDownRight")
+  const mouthFrown = get("mouthFrownLeft") + get("mouthFrownRight")
 
   let mood = "Neutral 😐"
 
-  // 😲 SURPRISED → open mouth + any eyebrow raise
-  if (mouthOpen > 0.2 && oneBrowUp > 0.18) {
-    mood = "Surprised 😲"
-  }
-
-  // 🤩 EXCITED → smile + open mouth + slight brow lift
-  else if (smile > 0.35 && mouthOpen > 0.4 && browUp > 0.25) {
+  // 🤩 EXCITED → smile + eyebrows raised (check BEFORE happy)
+  if (smile > 0.25 && browUp > 0.1) {
     mood = "Excited 🤩"
   }
 
-  // 😊 HAPPY → smile only
-  else if (smile > 0.55 && browDown < 0.3) {
+  // 😊 HAPPY → clear smile, no frown
+  else if (smile > 0.1 && browDown < 0.2) {
     mood = "Happy 😊"
   }
 
-  // 😠 ANGRY → brows down & squeezed
-  else if (browDown > 0.55 && smile < 0.25) {
+  // 😲 SURPRISED → mouth wide open, no smile
+  else if (smile > 0.5 && browUp > 0.2) {
+    mood = "Surprised 😲"
+  }
+
+  // 😠 ANGRY → brows down hard
+  else if (browDown > 0.45 && smile < 0.2) {
     mood = "Angry 😠"
   }
 
-  // 😔 SAD → inner brows raised + no smile
-  else if (get("browInnerUp") > 0.2 && smile < 0.2 && mouthOpen < 0.25) {
-    mood = "Sad 😔"
+  // ☹️ SAD → frown or flat face with slight brow tension, no smile
+  else if (
+    smile < 0.1 &&
+    mouthOpen < 0.15 &&
+    (mouthFrown > 0.05 || browDown > 0.15)
+  ) {
+    mood = "Sad ☹️"
   }
 
   setEmotion(mood)
@@ -105,7 +110,7 @@ export const detectEmotion = ({ videoRef, landmarkerRef, setEmotion }) => {
     "Excited 🤩": "excited",
     "Happy 😊": "happy",
     "Angry 😠": "angry",
-    "Sad 😔": "sad",
+    "Sad ☹️": "sad",
   }
 
   return moodMap[mood]

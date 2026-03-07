@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { useSong } from "../hooks/useSong"
+import { toast } from "react-toastify"
 
 const MOODS = ["happy", "sad", "angry", "surprised", "neutral", "excited"]
 
@@ -9,7 +10,10 @@ const UploadSong = () => {
   const { handleUploadSong, loading } = useSong()
 
   const handleUpload = async () => {
-    if (!file) return
+    if (!file) {
+      toast.warn("Please select a file first")
+      return
+    }
     await handleUploadSong({ file, mood: uploadMood })
     setFile(null)
   }

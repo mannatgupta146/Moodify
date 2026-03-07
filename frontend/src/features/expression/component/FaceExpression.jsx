@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react"
 import { detectEmotion, init } from "../utils/utils"
 import "../style/face.scss"
 import "../../../shared/styles/global.scss"
+import { toast } from "react-toastify"
 
 export default function FaceExpression({ onClick = () => {} }) {
   const videoRef = useRef(null)
@@ -17,6 +18,11 @@ export default function FaceExpression({ onClick = () => {} }) {
 
   const handleClick = async () => {
     const expression = detectEmotion({ videoRef, landmarkerRef, setEmotion })
+    if (!expression) {
+      toast.warn("Could not detect expression. Try again!")
+      return
+    }
+    toast.success(`Detected: ${expression}`)
     onClick(expression)
   }
 
