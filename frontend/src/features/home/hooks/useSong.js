@@ -6,6 +6,7 @@ import {
   deleteSong as deleteSongApi,
   updateSongMood as updateSongMoodApi,
 } from "../service/song.api"
+import { toast } from "react-toastify"
 
 export const useSong = () => {
   const { song, setSong, songs, setSongs, mood, setMood, loading, setLoading } =
@@ -15,14 +16,18 @@ export const useSong = () => {
     setLoading(true)
     setMood(mood)
 
-    const data = await getSong({ mood })
+    try {
+      const data = await getSong({ mood })
+      setSongs(data.songs)
 
-    setSongs(data.songs)
-
-    if (data.songs.length > 0) {
-      setSong(data.songs[0])
-    } else {
-      setSong(null)
+      if (data.songs.length > 0) {
+        setSong(data.songs[0])
+      } else {
+        setSong(null)
+        toast.info(`No ${mood} songs found`)
+      }
+    } catch (error) {
+      toast.error("Failed to fetch songs")
     }
 
     setLoading(false)
@@ -30,33 +35,47 @@ export const useSong = () => {
 
   const handleUploadSong = async ({ file, mood: uploadMood }) => {
     setLoading(true)
-    await uploadSongApi({ file, mood: uploadMood })
-    if (mood === uploadMood) {
-      const data = await getSong({ mood: uploadMood })
-      setSongs(data.songs)
+    try {
+      await uploadSongApi({ file, mood: uploadMood })
+      toast.success("Song uploaded!")
+      if (mood === uploadMood) {
+        const data = await getSong({ mood: uploadMood })
+        setSongs(data.songs)
+      }
+    } catch (error) {
+      toast.error("Upload failed")
     }
     setLoading(false)
   }
 
   const handleDeleteSong = async (id) => {
     setLoading(true)
-    await deleteSongApi(id)
-    const updated = songs.filter((s) => s._id !== id)
-    setSongs(updated)
-    if (song?._id === id) {
-      setSong(updated.length > 0 ? updated[0] : null)
+    try {
+      await deleteSongApi(id)
+      const updated = songs.filter((s) => s._id !== id)
+      setSongs(updated)
+      if (song?._id === id) {
+        setSong(updated.length > 0 ? updated[0] : null)
+      }
+      toast.success("Song deleted")
+    } catch (error) {
+      toast.error("Delete failed")
     }
     setLoading(false)
   }
 
   const handleUpdateMood = async (id, newMood) => {
     setLoading(true)
-    await updateSongMoodApi(id, newMood)
-    // remove from current list since mood changed
-    const updated = songs.filter((s) => s._id !== id)
-    setSongs(updated)
-    if (song?._id === id) {
-      setSong(updated.length > 0 ? updated[0] : null)
+    try {
+      await updateSongMoodApi(id, newMood)
+      const updated = songs.filter((s) => s._id !== id)
+      setSongs(updated)
+      if (song?._id === id) {
+        setSong(updated.length > 0 ? updated[0] : null)
+      }
+      toast.success(`Mood changed to ${newMood}`)
+    } catch (error) {
+      toast.error("Failed to update mood")
     }
     setLoading(false)
   }
