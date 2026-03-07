@@ -1,57 +1,50 @@
 import React, { useState } from "react"
+import { useSong } from "../hooks/useSong"
 
-const MOODS = [
-  "happy",
-  "sad",
-  "angry",
-  "surprised",
-  "neutral",
-  "excited"
-]
+const MOODS = ["happy", "sad", "angry", "surprised", "neutral", "excited"]
 
 const UploadSong = () => {
-
   const [file, setFile] = useState(null)
-  const [mood, setMood] = useState("happy")
+  const [uploadMood, setUploadMood] = useState("happy")
+  const { handleUploadSong, loading } = useSong()
 
-  const uploadSong = async () => {
-
+  const handleUpload = async () => {
     if (!file) return
-
-    const formData = new FormData()
-
-    formData.append("song", file)
-    formData.append("mood", mood)
-
-    await fetch("/api/songs", {
-      method: "POST",
-      body: formData
-    })
-
-    alert("Song uploaded")
-
-    window.location.reload()
+    await handleUploadSong({ file, mood: uploadMood })
+    setFile(null)
   }
 
   return (
     <div className="upload">
+      <h3 className="upload__title">Upload Song</h3>
 
-      <input
-        type="file"
-        accept="audio/mp3"
-        onChange={(e) => setFile(e.target.files[0])}
-      />
+      <label className="upload__file-label">
+        {file ? file.name : "Choose audio file..."}
+        <input
+          type="file"
+          accept="audio/mp3,audio/mpeg"
+          onChange={(e) => setFile(e.target.files[0])}
+        />
+      </label>
 
-      <select onChange={(e) => setMood(e.target.value)}>
-        {MOODS.map(m => (
-          <option key={m}>{m}</option>
+      <select
+        value={uploadMood}
+        onChange={(e) => setUploadMood(e.target.value)}
+      >
+        {MOODS.map((m) => (
+          <option key={m} value={m}>
+            {m}
+          </option>
         ))}
       </select>
 
-      <button onClick={uploadSong}>
-        Upload Song
+      <button
+        className="upload__btn"
+        onClick={handleUpload}
+        disabled={!file || loading}
+      >
+        {loading ? "Uploading..." : "Upload Song"}
       </button>
-
     </div>
   )
 }

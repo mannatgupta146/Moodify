@@ -1,7 +1,13 @@
 import { FaceLandmarker, FilesetResolver } from "@mediapipe/tasks-vision"
 
-export const init = async ({ videoRef, landmarkerRef, setEmotion, streamRef }) => {
+export const init = async ({
+  videoRef,
+  landmarkerRef,
+  setEmotion,
+  streamRef,
+}) => {
   streamRef.current = await navigator.mediaDevices.getUserMedia({ video: true })
+  if (!videoRef.current) return
   videoRef.current.srcObject = streamRef.current
 
   await new Promise((resolve) => {
@@ -33,13 +39,10 @@ export const detectEmotion = ({ videoRef, landmarkerRef, setEmotion }) => {
 
   if (!video || !faceLandmarker) return
 
-  if (
-  video.readyState !== 4 ||
-  video.videoWidth === 0
-) {
-  setEmotion("Camera not ready");
-  return;
-}
+  if (video.readyState !== 4 || video.videoWidth === 0) {
+    setEmotion("Camera not ready")
+    return
+  }
 
   const result = faceLandmarker.detectForVideo(video, Date.now())
 
@@ -96,15 +99,14 @@ export const detectEmotion = ({ videoRef, landmarkerRef, setEmotion }) => {
 
   setEmotion(mood)
 
-const moodMap = {
-  "Neutral 😐": "neutral",
-  "Surprised 😲": "surprised",
-  "Excited 🤩": "excited",
-  "Happy 😊": "happy",
-  "Angry 😠": "angry",
-  "Sad 😔": "sad"
-}
+  const moodMap = {
+    "Neutral 😐": "neutral",
+    "Surprised 😲": "surprised",
+    "Excited 🤩": "excited",
+    "Happy 😊": "happy",
+    "Angry 😠": "angry",
+    "Sad 😔": "sad",
+  }
 
-return moodMap[mood]
-
+  return moodMap[mood]
 }

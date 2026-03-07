@@ -18,10 +18,10 @@ export const useAuth = () => {
     }
   }
 
-  const handleLogin = async ({ identifier, password }) => {
+  const handleLogin = async ({ email, username, password }) => {
     setLoading(true)
     try {
-      const data = await login({ identifier, password })
+      const data = await login({ email, username, password })
       setUser(data.user)
       return true
     } catch (error) {
@@ -59,7 +59,6 @@ export const useAuth = () => {
   useEffect(() => {
     handlegetMe()
   }, [])
-  
 
   return {
     user,
